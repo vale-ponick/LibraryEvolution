@@ -22,9 +22,26 @@
 		582B63E52EB5941200A768D5 /* LibraryEvolution */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LibraryEvolution; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		582B63FE2EB60D2300A768D5 /* Exceptions for "LibraryEvolution" folder in "LibraryEvolution" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Stage1Basic/libraryBasicImplementation.swift,
+				Stage2Enums/libraryWithEnums.swift,
+				Stage3Optionals/libraryWithOptionals.swift,
+				Stage4Architecture/libraryWithArchitecture.swift,
+				Stage5Production/libraryProduction.swift,
+			);
+			target = 582B63E42EB5941200A768D5 /* LibraryEvolution */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		582B63E72EB5941200A768D5 /* LibraryEvolution */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				582B63FE2EB60D2300A768D5 /* Exceptions for "LibraryEvolution" folder in "LibraryEvolution" target */,
+			);
 			path = LibraryEvolution;
 			sourceTree = "<group>";
 		};
