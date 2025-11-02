@@ -69,3 +69,12 @@ print("\n📚 Final Status:")
 for book in books {
     book.displayInfo()
 }
+/* 📚 Testing Stage2Enums:
+ ✅ the book 'Hobbit' is now borrowed.
+ ✅ the book 'Shining' is now borrowed.
+ ❌ the book 'Hobbit' was borrowed by someone reader.
+
+ 📚 Final Status:
+ 'Hobbit' - J.R.R.Tolkien (fantasy) - ❌ borrowed
+ 'Shining' - Stephen King (horror) - ❌ borrowed
+ 'Harry Potter' - J.K. Rowling (fantasy) - ❌ borrowed */
