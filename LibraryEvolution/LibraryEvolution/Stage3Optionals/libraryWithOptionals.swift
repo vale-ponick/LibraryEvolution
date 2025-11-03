@@ -47,6 +47,17 @@ class Book {
                 print("❌ The book \(title) already taken someone") // книга УЖЕ у ДРУГОГО читателя на руках - НИКТО НЕ может ее взять
         }
     }
+    
+    func returnBook() {
+        if !isAvailable { // книга УЖЕ взята
+            isAvailable = true // меняем статус - можем вернуть
+            returnDate = Date()
+            print("✅ The book \(title) successfully returned")
+        } else { // книга УЖЕ в библиотеке - НЕЧЕГО возвращать
+            print("The book \(title) was already in library.")
+            
+        }
+    }
 }
     
 
