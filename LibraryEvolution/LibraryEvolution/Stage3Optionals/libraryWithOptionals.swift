@@ -25,11 +25,32 @@ class Book {
     var isAvailable: Bool
     let id: UUID
     
-    var takenDate: Date? // опциональные свойства
-    var dueDate: Date? // когда должны вернуть (дедлайн)
-    var returnDate: Date? // когда фактически вернули
+    var takenDate: Date?   // ✅ Опциональная - nil когда книга в библиотеке
+    var dueDate: Date?     // ✅ Опциональная - nil когда книга не взята
+    var returnDate: Date?  // ✅ Опциональная - nil когда книга не возвращена
     
-    init(title: String, author: String, category: BookCategory, isAvailable: Bool, id: UUID) {
+    var daysBorrowed: Int? { // сколько дней книга была взята
+        guard let taken = takenDate, let returned =  returnDate else { return nil }
+            return Calendar.current.dateComponents([.day], from: taken, to: returned).day
+            }
+    
+    var isOverdue: Bool { // просрочена ли книга
+        guard !isAvailable, let due = dueDate else { return false }
+        return Date() > due
+    }
+    
+    
+    var detailStatus: String  { // статус с подробной инфой
+        if isAvailable {
+            return "The book is available in library"
+        } else if isOverdue {
+            return "The book is overdue"
+        } else {
+            return "The book has been issued on time \(dueDate?.formatted() ?? "unknown")"
+        }
+    }
+    
+    init(title: String, author: String, category: BookCategory, isAvailable: Bool = true, id: UUID) {
         self.title = title
         self.author = author
         self.category = category
@@ -42,15 +63,15 @@ class Book {
             isAvailable = false // поменяли статус - ВЗЯЛИ - стала НЕдоступна
             takenDate = Date()
             dueDate = Calendar.current.date(byAdding: .day, value: 14, to: Date()) // + 14 days
-            print("✅ The book \(title) succesfully taken.") // книга ВЗЯТА
+            print("✅ The book \(title) successfully taken.") // книга ВЗЯТА
             } else {
-                print("❌ The book \(title) already taken someone") // книга УЖЕ у ДРУГОГО читателя на руках - НИКТО НЕ может ее взять
+                print("❌ The book \(title) already taken by someone") // книга УЖЕ взята кем-то -> НИКТО НЕ может ее взять
         }
     }
     
     func returnBook() {
         if !isAvailable { // книга УЖЕ взята
-            isAvailable = true // меняем статус - можем вернуть
+            isAvailable = true // меняем статус - МОЖЕМ вернуть
             returnDate = Date()
             print("✅ The book \(title) successfully returned")
         } else { // книга УЖЕ в библиотеке - НЕЧЕГО возвращать
@@ -60,4 +81,21 @@ class Book {
     }
 }
     
+// tests
+var books: [Book] = [
+    Book(title: "Hobbit", author: "J.R.R. Tolkien", category: .fantasy, isAvailable: true, id: UUID()),
+    Book(title: "Treasure Island", author: "R. Stevenson", category: .novel, isAvailable: true, id: UUID()),
+    Book(title: "The White Company", author: "A. Conan Doyle", category: .novel, isAvailable: true, id: UUID()),
+    Book(title: "The Hound of the Baskervilles", author: "A. Konan Doyle", category: .novel, isAvailable: true, id: UUID()),
+    Book(title: "Dune", author: "Frank Herbert", category: .scienceFiction, isAvailable: true, id: UUID()),
+    Book(title: "The Shining", author: "Stephen King", category: .horror, isAvailable: true, id: UUID()),
+    Book(title: "Steve Jobs", author: "Walter Isaacson", category: .biography, isAvailable: true, id: UUID())
+]
 
+print(" 📚 The Library:")
+for (index, book) in books.enumerated() {
+    print("\(index + 1). \(book.title) - \(book.detailStatus)")
+}
+book[0].takeBook() // берем 'Hobbit'
+book[3].takeBook() // // Берем 'The Hound of the Baskervilles'
+book[0].takeBook() // пытаемся взять 'Hobbit' еще раз - error!
